@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
 
 import '../logic/progress.dart';
+import '../config.dart';
 import 'account_repo.dart';
+import 'cloud_repo.dart';
 import 'db.dart';
 import 'nutrition_repo.dart';
 import 'repo.dart';
@@ -42,13 +44,18 @@ class AiException implements Exception {
 class AiRepo {
   static Future<Database> get _db => AppDb.get();
   static const _storage = FlutterSecureStorage();
-  static const defaultUrl = 'http://127.0.0.1:8000';
+  static const defaultUrl = aiServerUrl;
 
   // ---------- Connection settings (token in Android Keystore / iOS Keychain) ----------
-  static Future<AiConfig> config() async => AiConfig(
-        await _storage.read(key: 'ai_url') ?? defaultUrl,
-        await _storage.read(key: 'ai_token') ?? '',
-      );
+  /// A manually entered token (advanced / your own server) wins; otherwise the user's IronPulse login is used.
+  static Future<AiConfig> config() async {
+    final url = await _storage.read(key: 'ai_url');
+    final manual = await _storage.read(key: 'ai_token') ?? '';
+    return AiConfig(
+      (url == null || url.isEmpty) ? defaultUrl : url,
+      manual.isNotEmpty ? manual : (await CloudRepo.accessToken() ?? ''),
+    );
+  }
 
   static Future<void> saveConfig(String url, String token) async {
     await _storage.write(key: 'ai_url', value: url.trim().replaceAll(RegExp(r'/+$'), ''));
@@ -152,7 +159,7 @@ class AiRepo {
   /// If the request fails, the user's message stays saved so they can retry.
   static Future<String> send(String? conversationId, String text, {http.Client? client}) async {
     final cfg = await config();
-    if (!cfg.complete) throw AiException('IronPulse AI is not connected yet. Add your server address and access token.');
+    if (!cfg.complete) throw AiException('Sign in to use IronPulse AI: Profile → Account & cloud backup.');
     final conv = await _ensureConversation(conversationId, text);
     await _add(conv, 'user', text);
     final history = await messages(conv);
@@ -171,7 +178,7 @@ class AiRepo {
       if (r.statusCode != 200) {
         final msg = (data?['error'] as Map?)?['message'] as String?;
         throw AiException(switch (r.statusCode) {
-          401 => 'The access token was rejected. Check it in AI settings.',
+          401 => 'Your login was not accepted. Sign out and sign in again in Account & cloud backup.',
           429 => msg ?? 'Too many messages. Wait a moment.',
           _ => msg ?? 'The AI server returned an error (${r.statusCode}).',
         });
@@ -205,12 +212,12 @@ class AiRepo {
   /// Checks the server and model. Returns (ok, human-readable detail).
   static Future<(bool, String)> checkStatus() async {
     final cfg = await config();
-    if (!cfg.complete) return (false, 'Not connected yet.');
+    if (!cfg.complete) return (false, 'Sign in (Account & cloud backup) to use IronPulse AI.');
     try {
       final r = await http
           .get(Uri.parse('${cfg.url}/v1/status'), headers: {'authorization': 'Bearer ${cfg.token}'})
           .timeout(const Duration(seconds: 75)); // a sleeping free cloud server needs ~1 min to wake
-      if (r.statusCode == 401) return (false, 'Access token rejected.');
+      if (r.statusCode == 401) return (false, 'Login not accepted - sign in again.');
       final d = _decode(r.body);
       if (r.statusCode != 200 || d == null) return (false, 'Server error (${r.statusCode}).');
       return (d['ok'] == true, d['ok'] == true ? 'Connected · ${d['model']}' : '${d['detail']}');

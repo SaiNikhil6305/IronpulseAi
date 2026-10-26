@@ -41,6 +41,22 @@ class CloudRepo {
   static User? get user => _ready ? Supabase.instance.client.auth.currentUser : null;
   static bool get signedIn => user != null;
 
+  /// Current login token (refreshed if expired), used to reach IronPulse AI. Null when signed out.
+  static Future<String?> accessToken() async {
+    if (!_ready) return null;
+    final auth = Supabase.instance.client.auth;
+    var s = auth.currentSession;
+    if (s == null) return null;
+    if (s.isExpired) {
+      try {
+        s = (await auth.refreshSession()).session;
+      } catch (_) {
+        return null;
+      }
+    }
+    return s?.accessToken;
+  }
+
   static String _friendly(Object e) {
     if (e is CloudException) return e.message;
     if (e is AuthException) {

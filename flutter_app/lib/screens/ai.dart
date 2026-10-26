@@ -257,7 +257,7 @@ class _AiScreenState extends State<AiScreen> {
           Icon(Icons.link, color: IP.accent),
           SizedBox(width: 12),
           Expanded(
-              child: Text('IronPulse AI is not connected. Tap to add your server address and access token. '
+              child: Text('Sign in to use IronPulse AI (Profile → Account & cloud backup). Tap for AI settings. '
                   'Until then, no answers are generated.')),
         ]),
       );
@@ -379,15 +379,15 @@ class _AiSettingsScreenState extends State<AiSettingsScreen> {
           controller: _token,
           obscureText: _obscure,
           decoration: InputDecoration(
-            labelText: 'Access token',
+            labelText: 'Access token (optional)',
             suffixIcon: IconButton(
                 onPressed: () => setState(() => _obscure = !_obscure),
                 icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off)),
           ),
         ),
         const SizedBox(height: 6),
-        const Muted('The token is stored in your phone\'s secure storage. Use the same value as IRONPULSE_AI_TOKEN '
-            'in the server\'s .env file. Over USB, keep the address http://127.0.0.1:8000.', size: 12),
+        const Muted('Signed-in users don\'t need a token - leave it empty and IronPulse AI uses your login. '
+            'Advanced: enter a server address and token only if you run your own server.', size: 12),
         const SizedBox(height: 12),
         FilledButton(onPressed: _checking ? null : _saveAndTest, child: Text(_checking ? 'Checking…' : 'Save & test connection')),
         if (_status != null) ...[

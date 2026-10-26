@@ -9,5 +9,8 @@ const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 /// Google OAuth client id of type "Web application" (used as serverClientId so Supabase can verify the token).
 const googleWebClientId = String.fromEnvironment('GOOGLE_WEB_CLIENT_ID');
 
+/// IronPulse AI server. Signed-in users reach it with their login; no token typing needed.
+const aiServerUrl = String.fromEnvironment('AI_SERVER_URL', defaultValue: 'https://ironpulse-ai-jq3u.onrender.com');
+
 bool get cloudConfigured => supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
 bool get googleConfigured => cloudConfigured && googleWebClientId.isNotEmpty;

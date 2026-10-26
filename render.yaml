@@ -19,3 +19,7 @@ services:
         value: "10"
       - key: DAILY_MESSAGE_LIMIT
         value: "200"
+      - key: SUPABASE_URL
+        value: https://gyrgzsmdwfkljjrhxnmu.supabase.co
+      - key: SUPABASE_ANON_KEY
+        sync: false

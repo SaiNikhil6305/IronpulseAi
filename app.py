@@ -8,6 +8,7 @@ A small, stateless FastAPI service that sits between the phone and an AI model.
 
 from __future__ import annotations
 
+import hashlib
 import hmac
 import logging
 import time
@@ -39,6 +40,9 @@ class Settings(BaseSettings):
     rate_limit_per_minute: int = 10
     daily_message_limit: int = 200
     ai_timeout_seconds: float = 90
+    # When set, any signed-in IronPulse user (Supabase access token) may use the AI.
+    supabase_url: str | None = None
+    supabase_anon_key: str | None = None
 
 
 @lru_cache
@@ -111,12 +115,42 @@ class RateLimiter:
 limiter = RateLimiter()
 
 
-def require_token(request: Request, settings: Settings = Depends(get_settings)) -> str:
+_user_cache: dict[str, tuple[str, float]] = {}
+
+
+async def verify_supabase_user(settings: Settings, token: str) -> str | None:
+    """Asks Supabase who owns this access token. Cached 5 min (by hash) to keep chats fast."""
+    if not settings.supabase_url or not settings.supabase_anon_key or token.count(".") != 2:
+        return None
+    key = hashlib.sha256(token.encode()).hexdigest()
+    hit = _user_cache.get(key)
+    if hit and hit[1] > time.monotonic():
+        return hit[0]
+    try:
+        async with httpx.AsyncClient(timeout=10) as c:
+            r = await c.get(settings.supabase_url.rstrip("/") + "/auth/v1/user",
+                            headers={"apikey": settings.supabase_anon_key, "authorization": f"Bearer {token}"})
+        uid = r.json().get("id") if r.status_code == 200 else None
+    except (httpx.HTTPError, ValueError):
+        raise HTTPException(503, {"code": "auth_unavailable", "message": "Could not check your login. Try again."})
+    if not uid:
+        return None
+    if len(_user_cache) > 5000:
+        _user_cache.clear()
+    _user_cache[key] = (str(uid), time.monotonic() + 300)
+    return str(uid)
+
+
+async def require_token(request: Request, settings: Settings = Depends(get_settings)) -> str:
+    """Returns a rate-limit key: 'admin' for the server token, 'user:<id>' for a signed-in app user."""
     auth = request.headers.get("authorization", "")
     token = auth[7:] if auth.lower().startswith("bearer ") else ""
-    if not token or not hmac.compare_digest(token.encode(), settings.ironpulse_ai_token.encode()):
-        raise HTTPException(401, {"code": "unauthorized", "message": "Invalid or missing access token."})
-    return token
+    if token and hmac.compare_digest(token.encode(), settings.ironpulse_ai_token.encode()):
+        return "admin"
+    uid = await verify_supabase_user(settings, token) if token else None
+    if uid:
+        return "user:" + uid
+    raise HTTPException(401, {"code": "unauthorized", "message": "Please sign in to use IronPulse AI."})
 
 
 class ProviderError(Exception):

@@ -93,3 +93,18 @@ def test_real_connect_error_is_translated():
 
 def test_health_is_public():
     assert client.get("/health").json() == {"status": "ok"}
+
+
+def test_supabase_user_token_accepted(reset, monkeypatch):
+    async def fake(settings, token):
+        return "abc" if token == "a.b.c" else None
+    monkeypatch.setattr(server, "verify_supabase_user", fake)
+    r = client.post("/v1/chat", json=BODY, headers={"authorization": "Bearer a.b.c"})
+    assert r.status_code == 200
+    assert client.post("/v1/chat", json=BODY, headers={"authorization": "Bearer x.y.z"}).status_code == 401
+
+
+def test_supabase_disabled_rejects_jwt():
+    s = server.Settings(supabase_url=None)
+    import asyncio
+    assert asyncio.run(server.verify_supabase_user(s, "a.b.c")) is None
