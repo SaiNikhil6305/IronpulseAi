@@ -197,7 +197,7 @@ class HealthSummaryCard extends StatelessWidget {
           final steps = days.where((d) => d.steps != null).map((d) => d.steps!).toList();
           final sleep = days.where((d) => d.sleepMinutes != null).map((d) => d.sleepMinutes!).toList();
           final rest = days.where((d) => d.restingHr != null).map((d) => d.restingHr!).toList();
-          String avg(List<num> l, String Function(double) f) => l.isEmpty ? '-' : f(l.reduce((a, b) => a + b) / l.length);
+          String avg(List<num> l, String Function(double) f) => l.isEmpty ? '-' : f(l.fold<double>(0, (a, b) => a + b) / l.length);
           return Row(children: [
             StatTile('Avg steps', avg(steps, (v) => v.round().toString()), icon: Icons.directions_walk),
             const SizedBox(width: 10),
