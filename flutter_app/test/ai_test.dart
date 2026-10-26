@@ -65,7 +65,7 @@ void main() {
       throwsA(predicate((e) => e is AiException && e.message.contains('ollama serve'))),
     );
     await expectLater(AiRepo.send(null, 'hi', client: server(401, {})),
-        throwsA(predicate((e) => e is AiException && e.message.contains('token'))));
+        throwsA(predicate((e) => e is AiException && e.message.contains('sign in'))));
     final convs = await AiRepo.conversations();
     expect(convs, isNotEmpty);
     expect((await AiRepo.messages(convs.first.id)).last.role, 'user');
