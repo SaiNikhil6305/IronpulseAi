@@ -133,6 +133,40 @@ class AccountRepo {
     return paths;
   }
 
+  // ---------- Import (restore from backup) ----------
+  /// Tables in foreign-key order: parents first. Deleting runs in reverse.
+  static const _restoreOrder = [
+    'profile', 'split_days', 'sessions', 'session_exercises', 'sets', 'xp_tx', 'checklist_items',
+    'checklist_done', 'food_entries', 'weights', 'goals', 'gym_schedule', 'ai_conversations', 'ai_messages',
+    'health_daily', 'consent_records',
+  ];
+
+  /// Replaces ALL local data with [data] (a document produced by [exportData]). Runs in one
+  /// transaction: if anything fails, the phone keeps its current data.
+  static Future<void> importData(Map<String, dynamic> data) async {
+    if (data['app'] != 'IronPulse' || data['profile'] is! List || (data['profile'] as List).isEmpty) {
+      throw const FormatException('This is not an IronPulse backup.');
+    }
+    final db = await _db;
+    await db.transaction((t) async {
+      for (final table in _restoreOrder.reversed) {
+        await t.delete(table);
+      }
+      await t.delete('exercises', where: 'custom = 1');
+      for (final ex in (data['custom_exercises'] as List? ?? const [])) {
+        await t.insert('exercises', Map<String, Object?>.from(ex as Map), conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+      for (final table in _restoreOrder) {
+        final cols = (await t.rawQuery('PRAGMA table_info($table)')).map((c) => c['name'] as String).toSet();
+        for (final row in (data[table] as List? ?? const [])) {
+          // Keep only columns this app version knows, so older/newer backups still restore.
+          final m = Map<String, Object?>.from(row as Map)..removeWhere((k, _) => !cols.contains(k));
+          await t.insert(table, m, conflictAlgorithm: ConflictAlgorithm.replace);
+        }
+      }
+    });
+  }
+
   // ---------- Delete everything ----------
   /// Permanently erases all IronPulse data on this phone. Callers cancel reminders and revoke
   /// Health Connect first (see SettingsScreen); this removes the database, tokens and export files.

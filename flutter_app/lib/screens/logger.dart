@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/cloud_repo.dart';
 import '../data/notifications.dart';
 import '../data/repo.dart';
 import '../data/seed.dart';
@@ -212,6 +213,7 @@ class _LoggerScreenState extends State<LoggerScreen> {
     final summary = await Repo.finishSession(widget.sessionId, notes.text.trim().isEmpty ? null : notes.text.trim());
     notifyDataChanged();
     Notifs.reschedule().catchError((_) => 0); // next reminder names the next day in the rotation
+    CloudRepo.autoBackup(); // quiet, only when signed in; never blocks the summary
     if (!mounted) return;
     if (summary == null) {
       Navigator.pop(context);

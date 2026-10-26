@@ -1,4 +1,4 @@
-# IronPulse - Flutter app (Phases 1-8)
+# IronPulse - Flutter app (Phases 1-9)
 
 ## Install into your project (PowerShell)
 cd C:\projects\Ironpulse
@@ -62,5 +62,17 @@ flutter run -d fd33a430
   response), docs/THIRD_PARTY_SERVICES.md (processor register), LICENSES_INVENTORY.md (103 packages)
 - Before publishing: set contactEmail in lib/screens/legal.dart
 
+## Phase 9 (new) - Accounts, Google Sign-In, cloud backup, release build
+- Settings -> Account & cloud backup: email sign-up/sign-in with 6-digit email codes, password reset,
+  Continue with Google (native, via Supabase signInWithIdToken), sign out, delete cloud account
+- Cloud backup: one private row per user (Row Level Security), Back up now / Restore, automatic backup
+  after each workout; restore is all-or-nothing (transaction) and tolerant of newer/older versions
+- Without env.json the app runs exactly as before (offline) and says cloud is not set up
+- supabase/schema.sql (table, RLS policies, delete_my_account), env.example.json, .gitignore
+- Release signing from android/key.properties (setup_android.dart), verified with a signed build
+- ci/ci.yml: GitHub Actions - tests, analyze, dependency audit, no-secrets check, APK build
+- Setup guide: docs/PHASE9_SETUP.md
+
 ## Not built yet
+- iOS build (needs a Mac + Apple developer account) - documented in docs/PHASE9_SETUP.md
 - Login / Google Sign-In / cloud sync (needs backend + Supabase setup)

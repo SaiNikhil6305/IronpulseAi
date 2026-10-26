@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../data/account_repo.dart';
+import '../data/cloud_repo.dart';
 import '../data/health_repo.dart';
 import '../data/notifications.dart';
 import '../data/repo.dart';
 import '../main.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
+import 'account.dart';
 import 'ai.dart';
 import 'legal.dart';
 import 'nutrition.dart';
@@ -34,6 +36,12 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile & settings')),
       body: ListView(padding: const EdgeInsets.fromLTRB(16, 0, 16, 32), children: [
+        const SectionTitle('Account'),
+        IPCard(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: _tile(context, Icons.cloud_outlined, 'Account & cloud backup', () => _go(context, const AccountScreen()),
+              sub: 'Sign in with email or Google, back up and restore'),
+        ),
         const SectionTitle('You'),
         IPCard(
           padding: const EdgeInsets.symmetric(vertical: 4),
@@ -61,7 +69,7 @@ class SettingsScreen extends StatelessWidget {
             _tile(context, Icons.download_outlined, 'Export my data', () => _export(context),
                 sub: 'JSON (everything) + CSV for workouts, food and weight'),
             _tile(context, Icons.code, 'Open-source licenses',
-                () => showLicensePage(context: context, applicationName: 'IronPulse', applicationVersion: '0.1.0')),
+                () => showLicensePage(context: context, applicationName: 'IronPulse', applicationVersion: '0.2.0')),
           ]),
         ),
         const SectionTitle('Danger zone'),
@@ -71,7 +79,7 @@ class SettingsScreen extends StatelessWidget {
               sub: 'Erases everything IronPulse stores on this phone', color: IP.error),
         ),
         const SizedBox(height: 16),
-        const Center(child: Muted('IronPulse 0.1.0 · Train Smart. Track Every Rep. Become Stronger.', size: 11.5)),
+        const Center(child: Muted('IronPulse 0.2.0 · Train Smart. Track Every Rep. Become Stronger.', size: 11.5)),
       ]),
     );
   }
@@ -124,6 +132,9 @@ class SettingsScreen extends StatelessWidget {
       await Notifs.cancelAll();
     } catch (_) {}
     if ((await HealthRepo.state()).enabled) await HealthRepo.revokeOnly();
+    try {
+      if (CloudRepo.signedIn) await CloudRepo.signOut(); // cloud backup itself stays until deleted in Account
+    } catch (_) {}
     await AccountRepo.deleteAllLocalData();
     notifyDataChanged();
     navigatorKey.currentState?.pushAndRemoveUntil(

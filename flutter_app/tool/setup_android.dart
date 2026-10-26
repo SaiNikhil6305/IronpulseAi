@@ -148,5 +148,36 @@ void main() {
     gf.writeAsStringSync(g);
   }
   stdout.writeln('✓ minSdk 26 (Android 8.0+, required by Health Connect)');
+  // ---- Release signing: uses android/key.properties if it exists (never committed) ----
+  if (kts.existsSync()) {
+    var g = kts.readAsStringSync();
+    if (!g.contains('ironpulse:release-signing')) {
+      // Imports go first; the properties block must come after plugins {} (Gradle rule), so it goes before android {}.
+      g = '// ironpulse:release-signing\nimport java.util.Properties\nimport java.io.FileInputStream\n\n' + g;
+      g = g.replaceFirst(RegExp(r'^android\s*\{', multiLine: true), '''val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+android {''');
+      g = g.replaceFirst(RegExp(r'buildTypes\s*\{'), '''signingConfigs {
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+
+    buildTypes {''');
+      g = g.replaceFirst('signingConfig = signingConfigs.getByName("debug")',
+          'signingConfig = if (keystorePropertiesFile.exists()) signingConfigs.getByName("release") else signingConfigs.getByName("debug")');
+      kts.writeAsStringSync(g);
+    }
+    stdout.writeln('✓ Release signing reads android/key.properties when present');
+  }
   stdout.writeln('Done. Now run: flutter run');
 }

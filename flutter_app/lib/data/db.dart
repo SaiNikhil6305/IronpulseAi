@@ -22,7 +22,7 @@ class AppDb {
     final dir = await getDatabasesPath();
     _db = await openDatabase(
       p.join(dir, 'ironpulse.db'),
-      version: 6,
+      version: 7,
       onConfigure: (db) => db.execute('PRAGMA foreign_keys = ON'),
       onCreate: (db, version) async {
         final b = db.batch();
@@ -89,6 +89,7 @@ class AppDb {
         await _v4(db);
         await _v5(db);
         await _v6(db);
+        await _v7(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) await _v2(db);
@@ -96,6 +97,7 @@ class AppDb {
         if (oldVersion < 4) await _v4(db);
         if (oldVersion < 5) await _v5(db);
         if (oldVersion < 6) await _v6(db);
+        if (oldVersion < 7) await _v7(db);
       },
     );
     return _db!;
@@ -214,5 +216,13 @@ class AppDb {
       granted INTEGER NOT NULL,
       policy_version TEXT NOT NULL,
       created_at TEXT NOT NULL)''');
+  }
+
+  /// Phase 9: cloud backup status.
+  static Future<void> _v7(Database db) async {
+    final b = db.batch();
+    b.execute('ALTER TABLE profile ADD COLUMN cloud_last_backup TEXT');
+    b.execute('ALTER TABLE profile ADD COLUMN cloud_auto_backup INTEGER NOT NULL DEFAULT 1');
+    await b.commit(noResult: true);
   }
 }

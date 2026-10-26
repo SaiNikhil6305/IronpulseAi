@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'data/cloud_repo.dart';
 import 'data/db.dart';
 import 'data/notifications.dart';
 import 'data/repo.dart';
@@ -20,6 +21,11 @@ Future<void> main() async {
     systemNavigationBarColor: IP.surface,
   ));
   await AppDb.get();
+  try {
+    await CloudRepo.init(); // no-op unless Supabase keys were provided at build time
+  } catch (_) {
+    // Cloud is optional: the app keeps working offline.
+  }
   try {
     await Notifs.init();
   } catch (_) {

@@ -1,0 +1,54 @@
+# Automated checks on every push / pull request.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ai-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r requirements.txt pytest pip-audit
+      - name: Tests
+        run: python -m pytest -q tests
+      - name: Dependency vulnerability audit
+        run: pip-audit -r requirements.txt
+
+  flutter-app:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Create Flutter project shell (platform folders are generated, not committed)
+        run: |
+          flutter create --org com.ironpulse --project-name ironpulse --platforms android,ios _shell
+          cp -r _shell/android _shell/ios .
+          rm -rf _shell
+      - run: flutter pub get
+      - name: SQLite for database tests
+        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
+      - name: Analyze (fail on errors and warnings)
+        run: flutter analyze --no-fatal-infos
+      - name: Tests
+        run: flutter test
+      - name: Check no secrets are committed
+        run: |
+          ! git ls-files | grep -E '(^|/)(\.env|env\.json|key\.properties)$|\.(jks|keystore)$'
+      - name: Build debug APK
+        run: |
+          dart run tool/setup_android.dart
+          flutter build apk --debug

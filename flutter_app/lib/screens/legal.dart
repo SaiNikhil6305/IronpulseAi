@@ -27,7 +27,7 @@ IronPulse is a fitness tracking app. Contact: $contactEmail
 - Daily summaries imported from Health Connect (if you connect it)
 - A record of the privacy choices below
 
-IronPulse has **no accounts and no cloud sync yet**. We (the developer) cannot see this data. If you uninstall the app or lose your phone, it is gone unless you exported it.
+**Accounts and cloud backup are optional.** Without an account, nothing is stored anywhere but your phone. If you sign in (email or Google) and back up, a copy of the data listed above (not access tokens) is stored in your private record in our database provider (Supabase), protected so only your account can read it. You can delete the backup and your login at any time (Account & backup → Delete my cloud account).
 
 ## Optional features and what leaves your phone
 | Feature | Off by default? | What is sent | To whom |
@@ -37,6 +37,7 @@ IronPulse has **no accounts and no cloud sync yet**. We (the developer) cannot s
 | AI nutrition summary | Yes | 7-day average calories/protein, protein target | Same as above |
 | Health Connect | Yes | Nothing leaves the phone - IronPulse only reads | - |
 | Reminders | Yes | Nothing - scheduled locally by Android | - |
+| Account & cloud backup | Yes | Email (or Google name/email), and your backup | Supabase (database/auth host); Google if you choose Google Sign-In |
 
 Never sent: your name, weight history, checklist, food log details, health data, or chat history (the server keeps no history and does not log message content).
 
@@ -46,7 +47,7 @@ Never sent: your name, weight history, checklist, food log details, health data,
 Health information (weight, heart rate, sleep) is sensitive. It is only processed for features you turn on.
 
 ## How long we keep it
-Data stays on your phone until you delete it. AI requests are not stored by the IronPulse server. AI providers handle requests under their own terms (for example, Groq's retention policy).
+Data stays on your phone until you delete it. Cloud backups are kept until you delete your cloud account; we plan to delete backups of accounts inactive for 3 years. AI requests are not stored by the IronPulse server. AI providers handle requests under their own terms (for example, Groq's retention policy).
 
 ## Your rights
 You can **see** all data in the app, **correct** it, **export** it (Settings → Export my data, JSON and CSV), **withdraw consent** for any optional feature, and **erase** everything (Settings → Delete all my data). Depending on where you live (for example India's Digital Personal Data Protection Act, 2023 or the EU GDPR) you may have further rights, including to complain to a data protection authority.
