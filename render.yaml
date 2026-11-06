@@ -1,0 +1,32 @@
+# Render Blueprint for the IronPulse API (FastAPI). Secrets are marked sync:false — set them in the Render dashboard.
+services:
+  - type: web
+    name: ironpulse-ai
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: SUPABASE_URL
+        value: https://mozswldnmrdzdoienohw.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: AI_PROVIDER
+        value: openai_compatible
+      - key: AI_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai
+      - key: AI_MODEL
+        value: gemini-3.8-flash
+      - key: AI_API_KEY
+        sync: false
+      - key: AI_RATE_LIMIT_PER_MINUTE
+        value: "6"
+      - key: AI_DAILY_MESSAGE_LIMIT
+        value: "50"
