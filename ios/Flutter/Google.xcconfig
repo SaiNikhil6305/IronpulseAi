@@ -1,0 +1,4 @@
+// Google Sign-In for iOS. Replace with values from your iOS OAuth client (docs/AUTH_SETUP.md).
+// These are client identifiers, not secrets.
+GOOGLE_IOS_CLIENT_ID = REPLACE_WITH_IOS_CLIENT_ID.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.REPLACE_WITH_IOS_CLIENT_ID

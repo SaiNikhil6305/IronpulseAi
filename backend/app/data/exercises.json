@@ -1,0 +1,1018 @@
+{
+  "version": 1,
+  "note": "Canonical IronPulse exercise catalogue. Instructions are original text. media_url must only reference media IronPulse is licensed to use; none are bundled yet.",
+  "exercises": [
+    {
+      "id": "barbell-bench-press",
+      "name": "Barbell Bench Press",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "equipment": "barbell",
+      "difficulty": "intermediate",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Lie on the bench with eyes under the bar and feet flat on the floor.",
+        "Grip slightly wider than shoulder width, pull shoulder blades back and down.",
+        "Unrack, lower the bar under control to the mid-chest.",
+        "Press up and slightly back until arms are straight."
+      ],
+      "safety": [
+        "Use a spotter or safety arms when training near failure.",
+        "Keep wrists stacked over elbows; do not bounce the bar off the chest."
+      ],
+      "alternatives": [
+        "machine-chest-press",
+        "incline-dumbbell-press",
+        "push-up"
+      ],
+      "media_url": "asset:videos/barbell-bench-press.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "incline-dumbbell-press",
+      "name": "Incline Dumbbell Press",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Set the bench to roughly 30 degrees.",
+        "Start with dumbbells at chest level, palms facing forward or slightly inward.",
+        "Press up until arms are nearly straight, then lower slowly to a comfortable stretch."
+      ],
+      "safety": [
+        "Bring the dumbbells to your chest before lying back, and lower them to the chest before sitting up."
+      ],
+      "alternatives": [
+        "barbell-bench-press",
+        "machine-chest-press"
+      ],
+      "media_url": "asset:videos/incline-dumbbell-press.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "machine-chest-press",
+      "name": "Machine Chest Press",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Adjust the seat so handles line up with mid-chest.",
+        "Press forward until arms are extended without locking hard.",
+        "Return slowly until you feel a stretch across the chest."
+      ],
+      "safety": [
+        "Keep your back against the pad throughout."
+      ],
+      "alternatives": [
+        "barbell-bench-press",
+        "push-up"
+      ],
+      "media_url": "asset:videos/machine-chest-press.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "cable-fly",
+      "name": "Cable Fly",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Set pulleys around shoulder height and step forward into a split stance.",
+        "With a slight bend in the elbows, bring the handles together in a wide arc.",
+        "Return slowly until you feel a stretch in the chest."
+      ],
+      "safety": [
+        "Keep the elbow angle fixed; avoid over-stretching the shoulders."
+      ],
+      "alternatives": [
+        "pec-deck-fly"
+      ],
+      "media_url": "asset:videos/cable-fly.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "pec-deck-fly",
+      "name": "Pec Deck Fly",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Adjust the seat so the handles are at chest height.",
+        "Bring the handles together in front of you, squeezing the chest.",
+        "Return under control."
+      ],
+      "safety": [
+        "Set the start position so the shoulders are not forced past a comfortable range."
+      ],
+      "alternatives": [
+        "cable-fly"
+      ],
+      "media_url": "asset:videos/pec-deck-fly.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "push-up",
+      "name": "Push-Ups",
+      "primary_muscle": "chest",
+      "secondary_muscles": [
+        "triceps",
+        "shoulders",
+        "core"
+      ],
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "tracking": "reps",
+      "unilateral": false,
+      "instructions": [
+        "Hands slightly wider than shoulders, body in a straight line.",
+        "Lower until the chest is close to the floor.",
+        "Push back up while keeping hips in line."
+      ],
+      "safety": [
+        "Elevate the hands on a bench to make the movement easier if needed."
+      ],
+      "alternatives": [
+        "machine-chest-press"
+      ],
+      "media_url": "asset:videos/push-up.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "shoulder-press",
+      "name": "Shoulder Press",
+      "primary_muscle": "shoulders",
+      "secondary_muscles": [
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Sit upright with dumbbells at shoulder height.",
+        "Press overhead until arms are nearly straight.",
+        "Lower back to shoulder height under control."
+      ],
+      "safety": [
+        "Avoid arching the lower back; brace the core."
+      ],
+      "alternatives": [
+        "dumbbell-lateral-raise"
+      ],
+      "media_url": "asset:videos/shoulder-press.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "dumbbell-lateral-raise",
+      "name": "Dumbbell Lateral Raise",
+      "primary_muscle": "shoulders",
+      "secondary_muscles": [
+        "traps"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Stand with dumbbells at your sides and a slight bend in the elbows.",
+        "Raise the arms out to the sides to about shoulder height.",
+        "Lower slowly."
+      ],
+      "safety": [
+        "Use a weight you can control without swinging."
+      ],
+      "alternatives": [
+        "cable-lateral-raise"
+      ],
+      "media_url": "asset:videos/dumbbell-lateral-raise.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "cable-lateral-raise",
+      "name": "Cable Lateral Raise",
+      "primary_muscle": "shoulders",
+      "secondary_muscles": [],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": true,
+      "instructions": [
+        "Set the pulley low and stand side-on to the machine.",
+        "Raise the handle out to the side to shoulder height.",
+        "Lower slowly and repeat, then switch sides."
+      ],
+      "safety": [
+        "Keep the torso still; avoid leaning away to cheat the weight up."
+      ],
+      "alternatives": [
+        "dumbbell-lateral-raise"
+      ],
+      "media_url": "asset:videos/cable-lateral-raise.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "reverse-pec-deck",
+      "name": "Reverse Pec Deck",
+      "primary_muscle": "rear_delts",
+      "secondary_muscles": [
+        "traps",
+        "back"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Sit facing the pad with handles at shoulder height.",
+        "Sweep the arms back in an arc, leading with the elbows.",
+        "Return under control."
+      ],
+      "safety": [
+        "Do not shrug; keep shoulders down."
+      ],
+      "alternatives": [
+        "face-pull"
+      ],
+      "media_url": "asset:videos/reverse-pec-deck.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "face-pull",
+      "name": "Face Pull",
+      "primary_muscle": "rear_delts",
+      "secondary_muscles": [
+        "traps"
+      ],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Use a rope at upper-chest height.",
+        "Pull toward your face, separating the rope ends as you go.",
+        "Return slowly."
+      ],
+      "safety": [
+        "Choose a light weight and focus on control."
+      ],
+      "alternatives": [
+        "reverse-pec-deck"
+      ],
+      "media_url": "asset:videos/face-pull.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "cable-pushdown",
+      "name": "Cable Pushdown",
+      "primary_muscle": "triceps",
+      "secondary_muscles": [],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Hold a bar or rope at a high pulley, elbows at your sides.",
+        "Extend the elbows until arms are straight.",
+        "Let the handle rise slowly without moving the elbows forward."
+      ],
+      "safety": [
+        "Keep the elbows pinned; avoid using body weight to push."
+      ],
+      "alternatives": [
+        "overhead-cable-extension",
+        "dumbbell-extension"
+      ],
+      "media_url": "asset:videos/cable-pushdown.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "overhead-cable-extension",
+      "name": "Overhead Cable Extension",
+      "primary_muscle": "triceps",
+      "secondary_muscles": [],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Face away from a pulley holding a rope behind your head.",
+        "Extend the arms forward and up.",
+        "Return slowly to a deep stretch."
+      ],
+      "safety": [
+        "Use a staggered stance for balance."
+      ],
+      "alternatives": [
+        "dumbbell-extension",
+        "cable-pushdown"
+      ],
+      "media_url": "asset:videos/overhead-cable-extension.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "dumbbell-extension",
+      "name": "Dumbbell Extension",
+      "primary_muscle": "triceps",
+      "secondary_muscles": [],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Hold one dumbbell with both hands overhead.",
+        "Lower it behind the head by bending the elbows.",
+        "Extend back to the start."
+      ],
+      "safety": [
+        "Keep the elbows pointing forward and the core braced."
+      ],
+      "alternatives": [
+        "overhead-cable-extension"
+      ],
+      "media_url": "asset:videos/dumbbell-extension.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "assisted-dip",
+      "name": "Assisted Dips",
+      "primary_muscle": "triceps",
+      "secondary_muscles": [
+        "chest",
+        "shoulders"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Select assistance on the machine and grip the bars.",
+        "Lower until elbows are around 90 degrees.",
+        "Press back up."
+      ],
+      "safety": [
+        "Stop the descent if you feel discomfort at the front of the shoulder."
+      ],
+      "alternatives": [
+        "cable-pushdown"
+      ],
+      "media_url": "asset:videos/assisted-dip.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "lat-pulldown",
+      "name": "Lat Pulldown",
+      "primary_muscle": "back",
+      "secondary_muscles": [
+        "biceps",
+        "rear_delts"
+      ],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Grip the bar slightly wider than shoulders, thighs under the pads.",
+        "Pull the bar to the upper chest, driving elbows down.",
+        "Return slowly to full arm extension."
+      ],
+      "safety": [
+        "Avoid pulling behind the neck."
+      ],
+      "alternatives": [
+        "pull-up"
+      ],
+      "media_url": "asset:videos/lat-pulldown.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "pull-up",
+      "name": "Pull-Ups",
+      "primary_muscle": "back",
+      "secondary_muscles": [
+        "biceps",
+        "core"
+      ],
+      "equipment": "bodyweight",
+      "difficulty": "intermediate",
+      "tracking": "reps",
+      "unilateral": false,
+      "instructions": [
+        "Hang from the bar with an overhand grip.",
+        "Pull until your chin passes the bar.",
+        "Lower to a full hang under control."
+      ],
+      "safety": [
+        "Use an assisted machine or band until full reps are possible."
+      ],
+      "alternatives": [
+        "lat-pulldown"
+      ],
+      "media_url": "asset:videos/pull-up.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "seated-cable-row",
+      "name": "Seated Cable Row",
+      "primary_muscle": "back",
+      "secondary_muscles": [
+        "biceps",
+        "rear_delts"
+      ],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Sit tall with feet on the platform and a slight knee bend.",
+        "Row the handle to your lower ribs.",
+        "Extend the arms slowly while keeping the chest up."
+      ],
+      "safety": [
+        "Do not round the lower back to reach forward."
+      ],
+      "alternatives": [
+        "chest-supported-row",
+        "one-arm-dumbbell-row"
+      ],
+      "media_url": "asset:videos/seated-cable-row.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "chest-supported-row",
+      "name": "Chest-Supported Row",
+      "primary_muscle": "back",
+      "secondary_muscles": [
+        "rear_delts",
+        "biceps"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Lie face-down on an incline bench.",
+        "Row the dumbbells toward your hips.",
+        "Lower until arms are straight."
+      ],
+      "safety": [
+        "Keep the chest on the pad throughout."
+      ],
+      "alternatives": [
+        "seated-cable-row"
+      ],
+      "media_url": "asset:videos/chest-supported-row.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "one-arm-dumbbell-row",
+      "name": "One-Arm Dumbbell Row",
+      "primary_muscle": "back",
+      "secondary_muscles": [
+        "biceps",
+        "rear_delts"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": true,
+      "instructions": [
+        "Support one hand and knee on a bench, back flat.",
+        "Row the dumbbell toward the hip.",
+        "Lower to a full stretch; complete reps then switch sides."
+      ],
+      "safety": [
+        "Keep the spine neutral; avoid twisting the torso."
+      ],
+      "alternatives": [
+        "seated-cable-row"
+      ],
+      "media_url": "asset:videos/one-arm-dumbbell-row.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "dumbbell-curl",
+      "name": "Dumbbell Curl",
+      "primary_muscle": "biceps",
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Stand with dumbbells at your sides, palms forward.",
+        "Curl up without moving the elbows forward.",
+        "Lower slowly."
+      ],
+      "safety": [
+        "Avoid swinging the torso."
+      ],
+      "alternatives": [
+        "cable-curl",
+        "hammer-curl"
+      ],
+      "media_url": "asset:videos/dumbbell-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "hammer-curl",
+      "name": "Hammer Curl",
+      "primary_muscle": "biceps",
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Hold dumbbells with palms facing each other.",
+        "Curl up keeping the neutral grip.",
+        "Lower under control."
+      ],
+      "safety": [
+        "Keep wrists neutral."
+      ],
+      "alternatives": [
+        "dumbbell-curl"
+      ],
+      "media_url": "asset:videos/hammer-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "cable-curl",
+      "name": "Cable Curl",
+      "primary_muscle": "biceps",
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Use a straight bar at a low pulley.",
+        "Curl the bar toward the shoulders.",
+        "Lower slowly to full extension."
+      ],
+      "safety": [
+        "Keep elbows close to the body."
+      ],
+      "alternatives": [
+        "dumbbell-curl",
+        "preacher-curl"
+      ],
+      "media_url": "asset:videos/cable-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "preacher-curl",
+      "name": "Preacher Curl",
+      "primary_muscle": "biceps",
+      "secondary_muscles": [],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Rest the upper arms on the preacher pad.",
+        "Curl up until forearms are near vertical.",
+        "Lower slowly without fully relaxing at the bottom."
+      ],
+      "safety": [
+        "Do not drop into the bottom position; the elbow is vulnerable when fully extended under load."
+      ],
+      "alternatives": [
+        "cable-curl"
+      ],
+      "media_url": "asset:videos/preacher-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "back-squat",
+      "name": "Barbell Back Squat",
+      "primary_muscle": "quads",
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings",
+        "core"
+      ],
+      "equipment": "barbell",
+      "difficulty": "intermediate",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Bar on the upper back, feet about shoulder width.",
+        "Brace and sit down between the hips to a depth you can control.",
+        "Drive up through the whole foot."
+      ],
+      "safety": [
+        "Use safety pins in a rack.",
+        "Keep knees tracking over the toes."
+      ],
+      "alternatives": [
+        "goblet-squat",
+        "leg-press"
+      ],
+      "media_url": "asset:videos/back-squat.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "goblet-squat",
+      "name": "Goblet Squat",
+      "primary_muscle": "quads",
+      "secondary_muscles": [
+        "glutes",
+        "core"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Hold a dumbbell vertically at your chest.",
+        "Squat down keeping the chest tall.",
+        "Stand back up."
+      ],
+      "safety": [
+        "Choose a depth that keeps your back neutral."
+      ],
+      "alternatives": [
+        "back-squat",
+        "leg-press"
+      ],
+      "media_url": "asset:videos/goblet-squat.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "leg-press",
+      "name": "Leg Press",
+      "primary_muscle": "quads",
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Place feet shoulder-width on the platform.",
+        "Lower the sled until knees are around 90 degrees.",
+        "Press back up without locking the knees."
+      ],
+      "safety": [
+        "Do not let the lower back lift off the pad at the bottom."
+      ],
+      "alternatives": [
+        "back-squat",
+        "goblet-squat"
+      ],
+      "media_url": "asset:videos/leg-press.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "leg-extension",
+      "name": "Leg Extension",
+      "primary_muscle": "quads",
+      "secondary_muscles": [],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Align knees with the machine pivot.",
+        "Extend the legs until straight.",
+        "Lower slowly."
+      ],
+      "safety": [
+        "Use controlled reps; avoid kicking the weight."
+      ],
+      "alternatives": [
+        "leg-press"
+      ],
+      "media_url": "asset:videos/leg-extension.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "romanian-deadlift",
+      "name": "Romanian Deadlift",
+      "primary_muscle": "hamstrings",
+      "secondary_muscles": [
+        "glutes",
+        "back"
+      ],
+      "equipment": "barbell",
+      "difficulty": "intermediate",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Hold the bar at hip height with soft knees.",
+        "Push the hips back, sliding the bar down the thighs.",
+        "Stop when you feel a strong hamstring stretch, then drive hips forward."
+      ],
+      "safety": [
+        "Keep the back neutral; range of motion ends where your back would start to round."
+      ],
+      "alternatives": [
+        "leg-curl"
+      ],
+      "media_url": "asset:videos/romanian-deadlift.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "leg-curl",
+      "name": "Leg Curl",
+      "primary_muscle": "hamstrings",
+      "secondary_muscles": [
+        "calves"
+      ],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Set the pad just above the heels.",
+        "Curl the heels toward the glutes.",
+        "Return slowly."
+      ],
+      "safety": [
+        "Keep hips pressed into the pad."
+      ],
+      "alternatives": [
+        "romanian-deadlift"
+      ],
+      "media_url": "asset:videos/leg-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "hip-thrust",
+      "name": "Hip Thrust",
+      "primary_muscle": "glutes",
+      "secondary_muscles": [
+        "hamstrings"
+      ],
+      "equipment": "barbell",
+      "difficulty": "intermediate",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Upper back on a bench, bar padded over the hips.",
+        "Drive hips up until the torso is level with the thighs.",
+        "Lower under control."
+      ],
+      "safety": [
+        "Use a pad over the bar; keep ribs down at the top."
+      ],
+      "alternatives": [
+        "romanian-deadlift"
+      ],
+      "media_url": "asset:videos/hip-thrust.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "calf-raise",
+      "name": "Calf Raise",
+      "primary_muscle": "calves",
+      "secondary_muscles": [],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Balls of the feet on the platform edge.",
+        "Rise as high as possible.",
+        "Lower into a full stretch."
+      ],
+      "safety": [
+        "Pause briefly at the bottom instead of bouncing."
+      ],
+      "alternatives": [
+        "seated-calf-raise"
+      ],
+      "media_url": "asset:videos/calf-raise.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "seated-calf-raise",
+      "name": "Seated Calf Raise",
+      "primary_muscle": "calves",
+      "secondary_muscles": [],
+      "equipment": "machine",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Sit with the pad on your lower thighs.",
+        "Raise the heels as high as possible.",
+        "Lower to a full stretch."
+      ],
+      "safety": [
+        "Move slowly through the full range."
+      ],
+      "alternatives": [
+        "calf-raise"
+      ],
+      "media_url": "asset:videos/seated-calf-raise.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "dumbbell-shrug",
+      "name": "Shrugs",
+      "primary_muscle": "traps",
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Stand holding dumbbells at your sides.",
+        "Elevate the shoulders straight up toward the ears.",
+        "Pause, then lower."
+      ],
+      "safety": [
+        "Do not roll the shoulders."
+      ],
+      "alternatives": [
+        "farmers-carry"
+      ],
+      "media_url": "asset:videos/dumbbell-shrug.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "farmers-carry",
+      "name": "Farmer's Carry",
+      "primary_muscle": "forearms",
+      "secondary_muscles": [
+        "traps",
+        "core"
+      ],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "distance",
+      "unilateral": false,
+      "instructions": [
+        "Pick up heavy dumbbells with a neutral grip.",
+        "Walk with short, controlled steps, shoulders back.",
+        "Set down safely at the end distance."
+      ],
+      "safety": [
+        "Clear the walking path before starting."
+      ],
+      "alternatives": [
+        "dumbbell-shrug"
+      ],
+      "media_url": "asset:videos/farmers-carry.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "wrist-curl",
+      "name": "Wrist Curl",
+      "primary_muscle": "forearms",
+      "secondary_muscles": [],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Rest forearms on your thighs, palms up.",
+        "Curl the wrists up.",
+        "Lower slowly."
+      ],
+      "safety": [
+        "Use light weights; the wrist joint is small."
+      ],
+      "alternatives": [
+        "reverse-wrist-curl"
+      ],
+      "media_url": "asset:videos/wrist-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "reverse-wrist-curl",
+      "name": "Reverse Wrist Curl",
+      "primary_muscle": "forearms",
+      "secondary_muscles": [],
+      "equipment": "dumbbell",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Rest forearms on your thighs, palms down.",
+        "Extend the wrists upward.",
+        "Lower slowly."
+      ],
+      "safety": [
+        "Use light weights."
+      ],
+      "alternatives": [
+        "wrist-curl"
+      ],
+      "media_url": "asset:videos/reverse-wrist-curl.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "plank",
+      "name": "Plank",
+      "primary_muscle": "core",
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "equipment": "bodyweight",
+      "difficulty": "beginner",
+      "tracking": "duration",
+      "unilateral": false,
+      "instructions": [
+        "Forearms on the floor, elbows under shoulders.",
+        "Hold a straight line from head to heels.",
+        "Breathe steadily."
+      ],
+      "safety": [
+        "Stop if the lower back sags."
+      ],
+      "alternatives": [
+        "cable-crunch"
+      ],
+      "media_url": "asset:videos/plank.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "cable-crunch",
+      "name": "Cable Crunch",
+      "primary_muscle": "core",
+      "secondary_muscles": [],
+      "equipment": "cable",
+      "difficulty": "beginner",
+      "tracking": "weight_reps",
+      "unilateral": false,
+      "instructions": [
+        "Kneel facing a high pulley holding a rope by your head.",
+        "Crunch down by flexing the spine.",
+        "Return slowly."
+      ],
+      "safety": [
+        "Move from the trunk, not by pulling with the arms."
+      ],
+      "alternatives": [
+        "hanging-knee-raise"
+      ],
+      "media_url": "asset:videos/cable-crunch.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    },
+    {
+      "id": "hanging-knee-raise",
+      "name": "Hanging Knee Raise",
+      "primary_muscle": "core",
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "equipment": "bodyweight",
+      "difficulty": "intermediate",
+      "tracking": "reps",
+      "unilateral": false,
+      "instructions": [
+        "Hang from a bar.",
+        "Raise the knees toward the chest by curling the pelvis.",
+        "Lower without swinging."
+      ],
+      "safety": [
+        "Use captain's-chair supports if grip limits you."
+      ],
+      "alternatives": [
+        "cable-crunch",
+        "plank"
+      ],
+      "media_url": "asset:videos/hanging-knee-raise.mp4",
+      "media_license": "Photos: free-exercise-db (public domain, Unlicense); overlay & body map: IronPulse"
+    }
+  ]
+}

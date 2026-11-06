@@ -1,5 +1,5 @@
-# Automated checks on every push / pull request.
 name: CI
+
 on:
   push:
     branches: [main]
@@ -9,46 +9,96 @@ permissions:
   contents: read
 
 jobs:
-  ai-server:
+  backend:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ironpulse
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Install
-        run: pip install -r requirements.txt pytest pip-audit
-      - name: Tests
-        run: python -m pytest -q tests
-      - name: Dependency vulnerability audit
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Tests (SQLite)
+        run: pytest -q
+      - name: Migrate PostgreSQL and check models match migrations
+        env:
+          DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/ironpulse
+          SUPABASE_JWT_SECRET: ci-only
+        run: |
+          alembic upgrade head
+          alembic check
+      - name: Tests (PostgreSQL)
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/ironpulse
+        run: pytest -q
+      - name: Dependency audit
         run: pip-audit -r requirements.txt
 
-  flutter-app:
+  flutter:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: flutter_app
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Create Flutter project shell (platform folders are generated, not committed)
-        run: |
-          flutter create --org com.ironpulse --project-name ironpulse --platforms android,ios _shell
-          cp -r _shell/android _shell/ios .
-          rm -rf _shell
+          cache: true
       - run: flutter pub get
-      - name: SQLite for database tests
-        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
-      - name: Analyze (fail on errors and warnings)
-        run: flutter analyze --no-fatal-infos
-      - name: Tests
-        run: flutter test --concurrency=1  # DB tests share one SQLite file; run files one at a time
-      - name: Check no secrets are committed
+      - run: flutter analyze
+      - run: flutter test
+
+  android:
+    needs: flutter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Write public app config from repository variables
         run: |
-          ! git ls-files | grep -E '(^|/)(\.env|env\.json|key\.properties)$|\.(jks|keystore)$'
-      - name: Build debug APK
+          cat > config/app_config.json <<JSON
+          {
+            "SUPABASE_URL": "${{ vars.SUPABASE_URL }}",
+            "SUPABASE_ANON_KEY": "${{ vars.SUPABASE_ANON_KEY }}",
+            "API_BASE_URL": "${{ vars.API_BASE_URL }}",
+            "GOOGLE_WEB_CLIENT_ID": "${{ vars.GOOGLE_WEB_CLIENT_ID }}",
+            "GOOGLE_IOS_CLIENT_ID": "${{ vars.GOOGLE_IOS_CLIENT_ID }}"
+          }
+          JSON
+      - name: Restore release keystore (only if secrets are configured)
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        if: ${{ env.KEYSTORE_B64 != '' }}
         run: |
-          dart run tool/setup_android.dart
-          flutter build apk --debug
+          echo "$KEYSTORE_B64" | base64 -d > android/app/release.jks
+          printf 'storeFile=release.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+            "$KEYSTORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/key.properties
+      - run: flutter build apk --release --dart-define-from-file=config/app_config.json
+      - run: flutter build appbundle --release --dart-define-from-file=config/app_config.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ironpulse-android
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab

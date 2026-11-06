@@ -1,52 +1,64 @@
-# IronPulse AI server (runs on your PC)
+# IronPulse
 
-Phone --USB (adb reverse)--> this server (127.0.0.1:8000) --> Ollama model on your PC.
-Nothing is exposed to your Wi-Fi or the internet. Chat history stays on the phone.
+**Train Smart. Track Every Rep. Become Stronger.**
 
-## 1. Install Ollama + a model (PowerShell)
-    Invoke-WebRequest https://ollama.com/download/OllamaSetup.exe -OutFile "$env:TEMP\OllamaSetup.exe"
-    Start-Process "$env:TEMP\OllamaSetup.exe" -Wait
-    # open a NEW PowerShell window, then:
-    ollama pull llama3.2:3b
-    ollama run llama3.2:3b "say hi"      # quick check, then type /bye
+IronPulse is a Flutter fitness app for Android and iOS: fast gym-floor workout logging that works offline, custom
+splits, previous-performance hints, XP and streaks, nutrition and habit tracking, goals and weight, progress
+analytics, gym reminders, Health Connect import and **IronPulse AI** — backed by a FastAPI service on Supabase.
 
-llama3.2:3b is about 2 GB and runs on most PCs. With 16 GB+ RAM or a GPU, try qwen2.5:7b or llama3.1:8b
-for better answers (change AI_MODEL in .env).
+| | |
+|---|---|
+| App | Flutter 3.47 · Dart 3.13 · Riverpod 3 · GoRouter · Dio · sqflite · flutter_local_notifications · fl_chart · health |
+| Backend | Python 3.13 · FastAPI · Pydantic 2 · SQLAlchemy 2 · Alembic |
+| Platform | Supabase (Auth, Postgres with RLS, private Storage) · Google Sign-In · configurable AI provider |
 
-## 2. Install Python (skip if `python --version` already works)
-    Invoke-WebRequest https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe -OutFile "$env:TEMP\python.exe"
-    Start-Process "$env:TEMP\python.exe" -ArgumentList "/quiet InstallAllUsers=0 PrependPath=1" -Wait
-    # open a NEW PowerShell window
+Feature-by-feature status, what's tested and what still needs configuration: **[docs/STATUS.md](docs/STATUS.md)**.
 
-## 3. Set up the server (once)
-    cd C:\projects\Ironpulse\ai_server
-    python -m venv .venv
-    .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-    Copy-Item .env.example .env
-    $token = -join ((48..57)+(65..90)+(97..122) | Get-Random -Count 40 | % {[char]$_})
-    (Get-Content .env) -replace '^IRONPULSE_AI_TOKEN=.*', "IRONPULSE_AI_TOKEN=$token" | Set-Content .env
-    Write-Host "Your token: $token"     # you'll paste this into the app
+## Quick start
 
-## 4. Run it (each time)
-    cd C:\projects\Ironpulse\ai_server
-    .\.venv\Scripts\python.exe app.py
-    # in another window, with the phone plugged in:
-    adb reverse tcp:8000 tcp:8000
+```bash
+# 1. App — runs without any backend in "device-only" mode
+flutter pub get
+flutter analyze && flutter test
+flutter build apk --debug          # → build/app/outputs/flutter-apk/app-debug.apk
 
-## 5. Connect the app
-IronPulse -> AI tab -> settings icon -> Server address `http://127.0.0.1:8000`, paste the token,
-tap "Save & test connection". You should see "Connected · llama3.2:3b".
+# 2. Backend
+cd backend && pip install -r requirements-dev.txt && pytest -q
+cp .env.example .env && uvicorn app.main:app --reload
 
-## Using another provider instead of Ollama
-Set `AI_PROVIDER=openai_compatible`, `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL` in .env. Your messages (and
-the summary you chose to share) then go to that provider under its privacy policy.
+# 3. Full app with accounts, sync and AI
+cp config/app_config.example.json config/app_config.json   # public values only
+flutter build apk --release --dart-define-from-file=config/app_config.json
+```
 
-## Security notes
-- Only binds to 127.0.0.1. Do not change it to 0.0.0.0 without adding HTTPS.
-- Token checked in constant time; 10 messages/minute and 200/day limits; 64 KB request limit;
-  4,000 characters per message; 90 s model timeout.
-- Message content and tokens are never logged.
+Setup guides: [Auth (Supabase + Google)](docs/AUTH_SETUP.md) · [Deployment](docs/DEPLOYMENT.md) ·
+[Android build & install](docs/ANDROID_BUILD.md) · [iOS build](docs/IOS_BUILD.md)
 
-## Tests
-    .\.venv\Scripts\python.exe -m pip install pytest
-    .\.venv\Scripts\python.exe -m pytest tests
+## Repository layout
+
+```
+lib/                 Flutter app (core/ + features/<name>/{data,domain,presentation})
+test/, integration_test/
+assets/data/exercises.json   exercise catalogue (identical copy of backend/app/data/exercises.json)
+android/, ios/       platform projects (app id / bundle id: com.ironpulse.app)
+backend/             FastAPI app, Alembic migrations, Supabase RLS SQL, tests, Dockerfile
+config/              app_config.example.json (public build-time values)
+docs/                architecture, schema, API, security, privacy, testing, builds, legal drafts
+tool/                icon and license-inventory generators
+.github/workflows/   CI (backend on SQLite + Postgres, Flutter analyze/test, release APK/AAB)
+```
+
+## Documentation
+
+[Architecture](docs/ARCHITECTURE.md) · [Database schema](docs/DATABASE_SCHEMA.md) ·
+[API](docs/API_SPECIFICATION.md) ([OpenAPI](docs/openapi.json)) · [Security](docs/SECURITY.md) ·
+[Privacy & compliance](docs/PRIVACY_AND_COMPLIANCE.md) · [Testing](docs/TESTING.md) ·
+[Notifications](docs/NOTIFICATIONS.md) · [Third-party services](docs/THIRD_PARTY_SERVICES.md) ·
+[Dependency licenses](docs/DEPENDENCY_LICENSES.md) · [Incident response](docs/INCIDENT_RESPONSE.md) ·
+[Privacy policy draft](docs/PRIVACY_POLICY.md) · [Terms draft](docs/TERMS.md)
+
+## Safety
+
+IronPulse and IronPulse AI give general fitness information, not medical advice. The AI is instructed never to
+diagnose, recommend steroids, guarantee results or encourage unsafe lifting, and to refer pain or injury to a
+qualified professional.

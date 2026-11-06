@@ -1,0 +1,4721 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "IronPulse API",
+  "description": "Backend for the IronPulse fitness app. All /v1 endpoints require a Supabase access token in the Authorization header.",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/health": {
+   "get": {
+    "tags": [
+     "ops"
+    ],
+    "summary": "Health",
+    "operationId": "health_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ready": {
+   "get": {
+    "tags": [
+     "ops"
+    ],
+    "summary": "Ready",
+    "operationId": "ready_ready_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/profile": {
+   "get": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Get Profile",
+    "operationId": "get_profile_v1_profile_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Put Profile",
+    "operationId": "put_profile_v1_profile_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ProfileIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/profile/complete-onboarding": {
+   "post": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Complete Onboarding",
+    "operationId": "complete_onboarding_v1_profile_complete_onboarding_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProfileOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/consents": {
+   "post": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Record Consent",
+    "operationId": "record_consent_v1_consents_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ConsentIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/account/export": {
+   "get": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Export",
+    "operationId": "export_v1_account_export_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/account": {
+   "delete": {
+    "tags": [
+     "profile & account"
+    ],
+    "summary": "Delete Account",
+    "operationId": "delete_account_v1_account_delete",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/exercises": {
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "List Exercises",
+    "operationId": "list_exercises_v1_exercises_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 60
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "muscle",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Muscle"
+      }
+     },
+     {
+      "name": "equipment",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Equipment"
+      }
+     },
+     {
+      "name": "difficulty",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Difficulty"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ExerciseOut"
+         },
+         "title": "Response List Exercises V1 Exercises Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/user-exercises": {
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "List User Exercises",
+    "operationId": "list_user_exercises_v1_user_exercises_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/CustomExerciseOut"
+         },
+         "type": "array",
+         "title": "Response List User Exercises V1 User Exercises Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/user-exercises/{item_id}": {
+   "put": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Put User Exercise",
+    "operationId": "put_user_exercise_v1_user_exercises__item_id__put",
+    "parameters": [
+     {
+      "name": "item_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Item Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CustomExerciseIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CustomExerciseOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Delete User Exercise",
+    "operationId": "delete_user_exercise_v1_user_exercises__item_id__delete",
+    "parameters": [
+     {
+      "name": "item_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Item Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/splits/active": {
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Get Active Split",
+    "operationId": "get_active_split_v1_splits_active_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/SplitOut"
+          },
+          {
+           "type": "null"
+          }
+         ],
+         "title": "Response Get Active Split V1 Splits Active Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/splits/{split_id}": {
+   "put": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Put Split",
+    "operationId": "put_split_v1_splits__split_id__put",
+    "parameters": [
+     {
+      "name": "split_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Split Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SplitIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SplitOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/sessions/{session_id}": {
+   "put": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Put Session",
+    "description": "Idempotent upsert of a full session snapshot (used by the offline sync queue).",
+    "operationId": "put_session_v1_sessions__session_id__put",
+    "parameters": [
+     {
+      "name": "session_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Session Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SessionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SessionSyncResult"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Get Session",
+    "operationId": "get_session_v1_sessions__session_id__get",
+    "parameters": [
+     {
+      "name": "session_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Session Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SessionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Delete Session",
+    "operationId": "delete_session_v1_sessions__session_id__delete",
+    "parameters": [
+     {
+      "name": "session_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Session Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/sessions": {
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "List Sessions",
+    "operationId": "list_sessions_v1_sessions_get",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 100,
+       "minimum": 1,
+       "default": 20,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "before",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Before"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_SessionOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/exercises/{exercise_ref}/previous": {
+   "get": {
+    "tags": [
+     "workouts"
+    ],
+    "summary": "Previous",
+    "operationId": "previous_v1_exercises__exercise_ref__previous_get",
+    "parameters": [
+     {
+      "name": "exercise_ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Exercise Ref"
+      }
+     },
+     {
+      "name": "exclude_session",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "uuid"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Exclude Session"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PreviousPerformance"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/gamification/summary": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Gamification Summary",
+    "operationId": "gamification_summary_v1_gamification_summary_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/gamification/xp-history": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Xp History",
+    "operationId": "xp_history_v1_gamification_xp_history_get",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/checklist/items/{item_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Checklist Item",
+    "operationId": "put_checklist_item_v1_checklist_items__item_id__put",
+    "parameters": [
+     {
+      "name": "item_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Item Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ChecklistItemIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ChecklistItemIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Checklist Item",
+    "operationId": "delete_checklist_item_v1_checklist_items__item_id__delete",
+    "parameters": [
+     {
+      "name": "item_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Item Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/checklist/items/{item_id}/completion": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Toggle Completion",
+    "operationId": "toggle_completion_v1_checklist_items__item_id__completion_put",
+    "parameters": [
+     {
+      "name": "item_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Item Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ChecklistToggleIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ChecklistDayOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/checklist": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Checklist Day",
+    "operationId": "checklist_day_v1_checklist_get",
+    "parameters": [
+     {
+      "name": "day",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Day"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ChecklistDayOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/checklist/history": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Checklist History",
+    "operationId": "checklist_history_v1_checklist_history_get",
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 365,
+       "minimum": 1,
+       "default": 30,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/meals/{meal_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Meal",
+    "operationId": "put_meal_v1_meals__meal_id__put",
+    "parameters": [
+     {
+      "name": "meal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Meal Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MealIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MealIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Meal",
+    "operationId": "delete_meal_v1_meals__meal_id__delete",
+    "parameters": [
+     {
+      "name": "meal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Meal Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/meals/{meal_id}/entries/{entry_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Entry",
+    "operationId": "put_entry_v1_meals__meal_id__entries__entry_id__put",
+    "parameters": [
+     {
+      "name": "meal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Meal Id"
+      }
+     },
+     {
+      "name": "entry_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Entry Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FoodEntryIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MealIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Entry",
+    "operationId": "delete_entry_v1_meals__meal_id__entries__entry_id__delete",
+    "parameters": [
+     {
+      "name": "meal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Meal Id"
+      }
+     },
+     {
+      "name": "entry_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Entry Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/nutrition/day": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Nutrition Day",
+    "operationId": "nutrition_day_v1_nutrition_day_get",
+    "parameters": [
+     {
+      "name": "day",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date",
+       "title": "Day"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DailyNutritionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/nutrition/history": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Nutrition History",
+    "operationId": "nutrition_history_v1_nutrition_history_get",
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 365,
+       "minimum": 1,
+       "default": 30,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/meals/saved": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Saved Meals",
+    "operationId": "saved_meals_v1_meals_saved_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/MealIO"
+         },
+         "type": "array",
+         "title": "Response Saved Meals V1 Meals Saved Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/nutrition/targets": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Targets",
+    "operationId": "put_targets_v1_nutrition_targets_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/NutritionTargetIO"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NutritionTargetIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/goals/{goal_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Goal",
+    "operationId": "put_goal_v1_goals__goal_id__put",
+    "parameters": [
+     {
+      "name": "goal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Goal Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/GoalIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GoalIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Goal",
+    "operationId": "delete_goal_v1_goals__goal_id__delete",
+    "parameters": [
+     {
+      "name": "goal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Goal Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/goals": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "List Goals",
+    "operationId": "list_goals_v1_goals_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/GoalProgressOut"
+         },
+         "type": "array",
+         "title": "Response List Goals V1 Goals Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/weights/{weight_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Weight",
+    "operationId": "put_weight_v1_weights__weight_id__put",
+    "parameters": [
+     {
+      "name": "weight_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Weight Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WeightIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/WeightIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Weight",
+    "operationId": "delete_weight_v1_weights__weight_id__delete",
+    "parameters": [
+     {
+      "name": "weight_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Weight Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/weights": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "List Weights",
+    "operationId": "list_weights_v1_weights_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/WeightIO"
+         },
+         "type": "array",
+         "title": "Response List Weights V1 Weights Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/photos/{photo_id}": {
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Photo",
+    "operationId": "put_photo_v1_photos__photo_id__put",
+    "parameters": [
+     {
+      "name": "photo_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Photo Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PhotoIO"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PhotoIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Delete Photo",
+    "operationId": "delete_photo_v1_photos__photo_id__delete",
+    "parameters": [
+     {
+      "name": "photo_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Photo Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/photos": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "List Photos",
+    "operationId": "list_photos_v1_photos_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/PhotoIO"
+         },
+         "type": "array",
+         "title": "Response List Photos V1 Photos Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/schedule": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Get Schedule",
+    "operationId": "get_schedule_v1_schedule_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ScheduleDayIO"
+         },
+         "type": "array",
+         "title": "Response Get Schedule V1 Schedule Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Schedule",
+    "operationId": "put_schedule_v1_schedule_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ScheduleIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ScheduleDayIO"
+         },
+         "type": "array",
+         "title": "Response Put Schedule V1 Schedule Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/notification-preferences": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Get Prefs",
+    "operationId": "get_prefs_v1_notification_preferences_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NotificationPrefIO"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Put Prefs",
+    "operationId": "put_prefs_v1_notification_preferences_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/NotificationPrefIO"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/NotificationPrefIO"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/push-tokens": {
+   "post": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Register Push Token",
+    "description": "Reserved for server push. The current release uses on-device local notifications only.",
+    "operationId": "register_push_token_v1_push_tokens_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PushTokenIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/wearables/sync": {
+   "post": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Wearable Sync",
+    "operationId": "wearable_sync_v1_wearables_sync_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/HealthSyncIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/wearables": {
+   "get": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "List Wearables",
+    "operationId": "list_wearables_v1_wearables_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/wearables/{provider}": {
+   "delete": {
+    "tags": [
+     "tracking"
+    ],
+    "summary": "Disconnect Wearable",
+    "operationId": "disconnect_wearable_v1_wearables__provider__delete",
+    "parameters": [
+     {
+      "name": "provider",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Provider"
+      }
+     },
+     {
+      "name": "delete_data",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Delete Data"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/ai/status": {
+   "get": {
+    "tags": [
+     "ironpulse ai"
+    ],
+    "summary": "Status",
+    "operationId": "status_v1_ai_status_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/ai/messages": {
+   "post": {
+    "tags": [
+     "ironpulse ai"
+    ],
+    "summary": "Send Message",
+    "operationId": "send_message_v1_ai_messages_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AIMessageIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/ai/conversations": {
+   "get": {
+    "tags": [
+     "ironpulse ai"
+    ],
+    "summary": "Conversations",
+    "operationId": "conversations_v1_ai_conversations_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/AIConversationOut"
+         },
+         "type": "array",
+         "title": "Response Conversations V1 Ai Conversations Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/ai/conversations/{conversation_id}/messages": {
+   "get": {
+    "tags": [
+     "ironpulse ai"
+    ],
+    "summary": "Messages",
+    "operationId": "messages_v1_ai_conversations__conversation_id__messages_get",
+    "parameters": [
+     {
+      "name": "conversation_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Conversation Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/AIChatMessageOut"
+         },
+         "title": "Response Messages V1 Ai Conversations  Conversation Id  Messages Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/ai/conversations/{conversation_id}": {
+   "delete": {
+    "tags": [
+     "ironpulse ai"
+    ],
+    "summary": "Delete Conversation",
+    "operationId": "delete_conversation_v1_ai_conversations__conversation_id__delete",
+    "parameters": [
+     {
+      "name": "conversation_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Conversation Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/sync/snapshot": {
+   "get": {
+    "tags": [
+     "sync"
+    ],
+    "summary": "Snapshot",
+    "operationId": "snapshot_v1_sync_snapshot_get",
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 730,
+       "minimum": 7,
+       "default": 120,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AIChatMessageOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "content": {
+      "type": "string",
+      "title": "Content"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "role",
+     "content",
+     "created_at"
+    ],
+    "title": "AIChatMessageOut"
+   },
+   "AIConversationOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "AIConversationOut"
+   },
+   "AIMessageIn": {
+    "properties": {
+     "conversation_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Conversation Id"
+     },
+     "message": {
+      "type": "string",
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Message"
+     },
+     "context_scopes": {
+      "items": {
+       "type": "string",
+       "enum": [
+        "goals",
+        "split",
+        "workouts",
+        "nutrition",
+        "progress",
+        "profile"
+       ]
+      },
+      "type": "array",
+      "title": "Context Scopes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "message"
+    ],
+    "title": "AIMessageIn"
+   },
+   "ChecklistDayOut": {
+    "properties": {
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ChecklistItemIO"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "completed_item_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "title": "Completed Item Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "day",
+     "items",
+     "completed_item_ids"
+    ],
+    "title": "ChecklistDayOut"
+   },
+   "ChecklistItemIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "category": {
+      "type": "string",
+      "enum": [
+       "food",
+       "supplement",
+       "habit"
+      ],
+      "title": "Category"
+     },
+     "quantity": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Quantity"
+     },
+     "protein_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 300.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Protein G"
+     },
+     "calories": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 5000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Calories"
+     },
+     "reminder_time": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reminder Time"
+     },
+     "paused": {
+      "type": "boolean",
+      "title": "Paused",
+      "default": false
+     },
+     "position": {
+      "type": "integer",
+      "title": "Position",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "category"
+    ],
+    "title": "ChecklistItemIO"
+   },
+   "ChecklistToggleIn": {
+    "properties": {
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "completed": {
+      "type": "boolean",
+      "title": "Completed"
+     },
+     "completion_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Completion Id"
+     },
+     "completed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Completed At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "day",
+     "completed",
+     "completion_id"
+    ],
+    "title": "ChecklistToggleIn"
+   },
+   "ConsentIn": {
+    "properties": {
+     "consent_type": {
+      "type": "string",
+      "enum": [
+       "privacy_policy",
+       "terms",
+       "ai_processing",
+       "health_data"
+      ],
+      "title": "Consent Type"
+     },
+     "version": {
+      "type": "string",
+      "maxLength": 20,
+      "title": "Version"
+     },
+     "granted": {
+      "type": "boolean",
+      "title": "Granted"
+     }
+    },
+    "type": "object",
+    "required": [
+     "consent_type",
+     "version",
+     "granted"
+    ],
+    "title": "ConsentIn"
+   },
+   "CustomExerciseIn": {
+    "properties": {
+     "id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Id"
+     },
+     "library_exercise_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 64
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Library Exercise Id"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "primary_muscle": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Primary Muscle"
+     },
+     "equipment": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Equipment"
+     },
+     "tracking": {
+      "type": "string",
+      "enum": [
+       "weight_reps",
+       "reps",
+       "duration",
+       "distance"
+      ],
+      "title": "Tracking",
+      "default": "weight_reps"
+     },
+     "unilateral": {
+      "type": "boolean",
+      "title": "Unilateral",
+      "default": false
+     },
+     "is_favorite": {
+      "type": "boolean",
+      "title": "Is Favorite",
+      "default": false
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "title": "CustomExerciseIn"
+   },
+   "CustomExerciseOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "library_exercise_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 64
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Library Exercise Id"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "primary_muscle": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Primary Muscle"
+     },
+     "equipment": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Equipment"
+     },
+     "tracking": {
+      "type": "string",
+      "enum": [
+       "weight_reps",
+       "reps",
+       "duration",
+       "distance"
+      ],
+      "title": "Tracking",
+      "default": "weight_reps"
+     },
+     "unilateral": {
+      "type": "boolean",
+      "title": "Unilateral",
+      "default": false
+     },
+     "is_favorite": {
+      "type": "boolean",
+      "title": "Is Favorite",
+      "default": false
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id"
+    ],
+    "title": "CustomExerciseOut"
+   },
+   "DailyNutritionOut": {
+    "properties": {
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "totals": {
+      "$ref": "#/components/schemas/Totals"
+     },
+     "meals": {
+      "items": {
+       "$ref": "#/components/schemas/MealIO"
+      },
+      "type": "array",
+      "title": "Meals"
+     },
+     "targets": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/NutritionTargetIO"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "day",
+     "totals",
+     "meals",
+     "targets"
+    ],
+    "title": "DailyNutritionOut"
+   },
+   "ExerciseOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "primary_muscle": {
+      "type": "string",
+      "title": "Primary Muscle"
+     },
+     "secondary_muscles": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Secondary Muscles"
+     },
+     "equipment": {
+      "type": "string",
+      "title": "Equipment"
+     },
+     "difficulty": {
+      "type": "string",
+      "title": "Difficulty"
+     },
+     "instructions": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Instructions"
+     },
+     "safety": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Safety"
+     },
+     "alternatives": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Alternatives"
+     },
+     "unilateral": {
+      "type": "boolean",
+      "title": "Unilateral"
+     },
+     "tracking": {
+      "type": "string",
+      "title": "Tracking"
+     },
+     "media_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Media Url"
+     },
+     "media_license": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Media License"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "primary_muscle",
+     "secondary_muscles",
+     "equipment",
+     "difficulty",
+     "instructions",
+     "safety",
+     "alternatives",
+     "unilateral",
+     "tracking"
+    ],
+    "title": "ExerciseOut"
+   },
+   "FoodEntryIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "food_name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Food Name"
+     },
+     "serving_size": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Serving Size"
+     },
+     "quantity": {
+      "type": "number",
+      "maximum": 100.0,
+      "exclusiveMinimum": 0.0,
+      "title": "Quantity",
+      "default": 1
+     },
+     "calories": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 10000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Calories"
+     },
+     "protein_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 1000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Protein G"
+     },
+     "carbs_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 2000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Carbs G"
+     },
+     "fat_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 1000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fat G"
+     },
+     "is_estimate": {
+      "type": "boolean",
+      "title": "Is Estimate",
+      "default": false
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "food_name"
+    ],
+    "title": "FoodEntryIO"
+   },
+   "GoalIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "goal_type": {
+      "type": "string",
+      "enum": [
+       "build_muscle",
+       "lose_fat",
+       "target_weight",
+       "strength",
+       "consistency",
+       "workout_count"
+      ],
+      "title": "Goal Type"
+     },
+     "title": {
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Title"
+     },
+     "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+     },
+     "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+     },
+     "target_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Value"
+     },
+     "start_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start Value"
+     },
+     "milestones": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "Milestones"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "active",
+       "completed",
+       "abandoned"
+      ],
+      "title": "Status",
+      "default": "active"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 1000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "goal_type",
+     "title",
+     "start_date",
+     "target_date"
+    ],
+    "title": "GoalIO"
+   },
+   "GoalProgressOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "goal_type": {
+      "type": "string",
+      "enum": [
+       "build_muscle",
+       "lose_fat",
+       "target_weight",
+       "strength",
+       "consistency",
+       "workout_count"
+      ],
+      "title": "Goal Type"
+     },
+     "title": {
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Title"
+     },
+     "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+     },
+     "target_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Target Date"
+     },
+     "target_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Value"
+     },
+     "start_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start Value"
+     },
+     "milestones": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "Milestones"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "active",
+       "completed",
+       "abandoned"
+      ],
+      "title": "Status",
+      "default": "active"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 1000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "current_value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Value"
+     },
+     "progress": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Progress"
+     },
+     "days_remaining": {
+      "type": "integer",
+      "title": "Days Remaining"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "goal_type",
+     "title",
+     "start_date",
+     "target_date",
+     "current_value",
+     "progress",
+     "days_remaining"
+    ],
+    "title": "GoalProgressOut"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "HealthRecordIn": {
+    "properties": {
+     "record_uid": {
+      "type": "string",
+      "maxLength": 120,
+      "title": "Record Uid"
+     },
+     "data_type": {
+      "type": "string",
+      "enum": [
+       "steps",
+       "heart_rate",
+       "active_minutes",
+       "sleep",
+       "workout",
+       "calories"
+      ],
+      "title": "Data Type"
+     },
+     "value": {
+      "type": "number",
+      "maximum": 1000000.0,
+      "minimum": 0.0,
+      "title": "Value"
+     },
+     "unit": {
+      "type": "string",
+      "maxLength": 20,
+      "title": "Unit"
+     },
+     "start_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Start At"
+     },
+     "end_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "End At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "record_uid",
+     "data_type",
+     "value",
+     "unit",
+     "start_at",
+     "end_at"
+    ],
+    "title": "HealthRecordIn"
+   },
+   "HealthSyncIn": {
+    "properties": {
+     "provider": {
+      "type": "string",
+      "enum": [
+       "health_connect",
+       "apple_health"
+      ],
+      "title": "Provider"
+     },
+     "granted_types": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Granted Types"
+     },
+     "records": {
+      "items": {
+       "$ref": "#/components/schemas/HealthRecordIn"
+      },
+      "type": "array",
+      "maxItems": 2000,
+      "title": "Records"
+     }
+    },
+    "type": "object",
+    "required": [
+     "provider"
+    ],
+    "title": "HealthSyncIn"
+   },
+   "MealIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "category": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Category"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "is_saved_template": {
+      "type": "boolean",
+      "title": "Is Saved Template",
+      "default": false
+     },
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/FoodEntryIO"
+      },
+      "type": "array",
+      "maxItems": 40,
+      "title": "Entries"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "day",
+     "category"
+    ],
+    "title": "MealIO"
+   },
+   "NotificationPrefIO": {
+    "properties": {
+     "gym_reminders_enabled": {
+      "type": "boolean",
+      "title": "Gym Reminders Enabled",
+      "default": true
+     },
+     "reminder_offsets_min": {
+      "items": {
+       "type": "integer",
+       "enum": [
+        0,
+        10,
+        20,
+        30
+       ]
+      },
+      "type": "array",
+      "title": "Reminder Offsets Min"
+     },
+     "checklist_reminders_enabled": {
+      "type": "boolean",
+      "title": "Checklist Reminders Enabled",
+      "default": false
+     },
+     "weigh_in_weekday": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 7.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Weigh In Weekday"
+     },
+     "weigh_in_time": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Weigh In Time"
+     }
+    },
+    "type": "object",
+    "title": "NotificationPrefIO"
+   },
+   "NutritionTargetIO": {
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "title": "Enabled",
+      "default": true
+     },
+     "calories": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 10000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Calories"
+     },
+     "protein_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 600.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Protein G"
+     },
+     "carbs_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 1500.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Carbs G"
+     },
+     "fat_g": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 600.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fat G"
+     }
+    },
+    "type": "object",
+    "title": "NutritionTargetIO"
+   },
+   "Page_SessionOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/SessionOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items"
+    ],
+    "title": "Page[SessionOut]"
+   },
+   "PhotoIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "storage_path": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Storage Path"
+     },
+     "view": {
+      "type": "string",
+      "enum": [
+       "front",
+       "side",
+       "back"
+      ],
+      "title": "View"
+     },
+     "taken_on": {
+      "type": "string",
+      "format": "date",
+      "title": "Taken On"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "hidden": {
+      "type": "boolean",
+      "title": "Hidden",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "storage_path",
+     "view",
+     "taken_on"
+    ],
+    "title": "PhotoIO"
+   },
+   "PreviousPerformance": {
+    "properties": {
+     "exercise_ref": {
+      "type": "string",
+      "title": "Exercise Ref"
+     },
+     "session_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Session Id"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "sets": {
+      "items": {
+       "$ref": "#/components/schemas/SetIO"
+      },
+      "type": "array",
+      "title": "Sets"
+     }
+    },
+    "type": "object",
+    "required": [
+     "exercise_ref",
+     "session_id",
+     "date",
+     "sets"
+    ],
+    "title": "PreviousPerformance"
+   },
+   "ProfileIn": {
+    "properties": {
+     "display_name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Display Name"
+     },
+     "age_range": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "13-17",
+         "18-24",
+         "25-34",
+         "35-44",
+         "45-54",
+         "55-64",
+         "65+"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Range"
+     },
+     "height_cm": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 260.0,
+        "minimum": 80.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Height Cm"
+     },
+     "current_weight_kg": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 400.0,
+        "minimum": 25.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Weight Kg"
+     },
+     "target_weight_kg": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 400.0,
+        "minimum": 25.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Weight Kg"
+     },
+     "experience": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "beginner",
+         "intermediate",
+         "advanced"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Experience"
+     },
+     "goals": {
+      "items": {
+       "type": "string",
+       "enum": [
+        "build_muscle",
+        "lose_fat",
+        "recomposition",
+        "strength",
+        "endurance",
+        "consistency",
+        "maintain"
+       ]
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Goals"
+     },
+     "training_days": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Training Days"
+     },
+     "preferred_gym_time": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Preferred Gym Time"
+     },
+     "workout_duration_min": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 300.0,
+        "minimum": 10.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Workout Duration Min"
+     },
+     "equipment": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "Equipment"
+     },
+     "dietary_preferences": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Dietary Preferences"
+     },
+     "allergies": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Allergies"
+     },
+     "units": {
+      "type": "string",
+      "enum": [
+       "metric",
+       "imperial"
+      ],
+      "title": "Units",
+      "default": "metric"
+     },
+     "timezone": {
+      "type": "string",
+      "title": "Timezone",
+      "default": "UTC"
+     },
+     "weekly_target": {
+      "type": "integer",
+      "maximum": 7.0,
+      "minimum": 1.0,
+      "title": "Weekly Target",
+      "default": 3
+     },
+     "ai_context_scopes": {
+      "items": {
+       "type": "string",
+       "enum": [
+        "goals",
+        "split",
+        "workouts",
+        "nutrition",
+        "progress",
+        "profile"
+       ]
+      },
+      "type": "array",
+      "title": "Ai Context Scopes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "display_name"
+    ],
+    "title": "ProfileIn"
+   },
+   "ProfileOut": {
+    "properties": {
+     "display_name": {
+      "type": "string",
+      "title": "Display Name",
+      "default": ""
+     },
+     "age_range": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "13-17",
+         "18-24",
+         "25-34",
+         "35-44",
+         "45-54",
+         "55-64",
+         "65+"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Range"
+     },
+     "height_cm": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 260.0,
+        "minimum": 80.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Height Cm"
+     },
+     "current_weight_kg": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 400.0,
+        "minimum": 25.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Weight Kg"
+     },
+     "target_weight_kg": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 400.0,
+        "minimum": 25.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Weight Kg"
+     },
+     "experience": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "beginner",
+         "intermediate",
+         "advanced"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Experience"
+     },
+     "goals": {
+      "items": {
+       "type": "string",
+       "enum": [
+        "build_muscle",
+        "lose_fat",
+        "recomposition",
+        "strength",
+        "endurance",
+        "consistency",
+        "maintain"
+       ]
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Goals"
+     },
+     "training_days": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Training Days"
+     },
+     "preferred_gym_time": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Preferred Gym Time"
+     },
+     "workout_duration_min": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 300.0,
+        "minimum": 10.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Workout Duration Min"
+     },
+     "equipment": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "Equipment"
+     },
+     "dietary_preferences": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Dietary Preferences"
+     },
+     "allergies": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Allergies"
+     },
+     "units": {
+      "type": "string",
+      "enum": [
+       "metric",
+       "imperial"
+      ],
+      "title": "Units",
+      "default": "metric"
+     },
+     "timezone": {
+      "type": "string",
+      "title": "Timezone",
+      "default": "UTC"
+     },
+     "weekly_target": {
+      "type": "integer",
+      "maximum": 7.0,
+      "minimum": 1.0,
+      "title": "Weekly Target",
+      "default": 3
+     },
+     "ai_context_scopes": {
+      "items": {
+       "type": "string",
+       "enum": [
+        "goals",
+        "split",
+        "workouts",
+        "nutrition",
+        "progress",
+        "profile"
+       ]
+      },
+      "type": "array",
+      "title": "Ai Context Scopes"
+     },
+     "onboarding_completed": {
+      "type": "boolean",
+      "title": "Onboarding Completed"
+     }
+    },
+    "type": "object",
+    "required": [
+     "onboarding_completed"
+    ],
+    "title": "ProfileOut"
+   },
+   "PushTokenIn": {
+    "properties": {
+     "platform": {
+      "type": "string",
+      "enum": [
+       "android",
+       "ios"
+      ],
+      "title": "Platform"
+     },
+     "token": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 10,
+      "title": "Token"
+     }
+    },
+    "type": "object",
+    "required": [
+     "platform",
+     "token"
+    ],
+    "title": "PushTokenIn"
+   },
+   "ScheduleDayIO": {
+    "properties": {
+     "weekday": {
+      "type": "integer",
+      "maximum": 7.0,
+      "minimum": 1.0,
+      "title": "Weekday"
+     },
+     "is_rest_day": {
+      "type": "boolean",
+      "title": "Is Rest Day",
+      "default": false
+     },
+     "time_local": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Time Local"
+     },
+     "workout_day_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Workout Day Name"
+     }
+    },
+    "type": "object",
+    "required": [
+     "weekday"
+    ],
+    "title": "ScheduleDayIO"
+   },
+   "ScheduleIn": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ScheduleDayIO"
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Items"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items"
+    ],
+    "title": "ScheduleIn"
+   },
+   "SessionExerciseIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "exercise_ref": {
+      "type": "string",
+      "maxLength": 64,
+      "title": "Exercise Ref"
+     },
+     "exercise_name": {
+      "type": "string",
+      "maxLength": 120,
+      "title": "Exercise Name"
+     },
+     "position": {
+      "type": "integer",
+      "maximum": 50.0,
+      "minimum": 0.0,
+      "title": "Position"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 1000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "sets": {
+      "items": {
+       "$ref": "#/components/schemas/SetIO"
+      },
+      "type": "array",
+      "maxItems": 40,
+      "title": "Sets"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "exercise_ref",
+     "exercise_name",
+     "position"
+    ],
+    "title": "SessionExerciseIO"
+   },
+   "SessionIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "workout_day_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Workout Day Name"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "in_progress",
+       "completed",
+       "discarded"
+      ],
+      "title": "Status"
+     },
+     "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started At"
+     },
+     "ended_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ended At"
+     },
+     "extra_muscle_groups": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Extra Muscle Groups"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 2000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "client_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Client Updated At"
+     },
+     "exercises": {
+      "items": {
+       "$ref": "#/components/schemas/SessionExerciseIO"
+      },
+      "type": "array",
+      "maxItems": 30,
+      "title": "Exercises"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "status",
+     "started_at",
+     "client_updated_at"
+    ],
+    "title": "SessionIn",
+    "description": "Full snapshot of a session as known by the device (idempotent PUT)."
+   },
+   "SessionOut": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "workout_day_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Workout Day Name"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "in_progress",
+       "completed",
+       "discarded"
+      ],
+      "title": "Status"
+     },
+     "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started At"
+     },
+     "ended_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ended At"
+     },
+     "extra_muscle_groups": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Extra Muscle Groups"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 2000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "client_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Client Updated At"
+     },
+     "exercises": {
+      "items": {
+       "$ref": "#/components/schemas/SessionExerciseIO"
+      },
+      "type": "array",
+      "maxItems": 30,
+      "title": "Exercises"
+     },
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "status",
+     "started_at",
+     "client_updated_at",
+     "id"
+    ],
+    "title": "SessionOut"
+   },
+   "SessionSyncResult": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "applied": {
+      "type": "boolean",
+      "title": "Applied"
+     },
+     "server_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Server Updated At"
+     },
+     "xp_from_session": {
+      "type": "integer",
+      "title": "Xp From Session"
+     },
+     "new_achievements": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "New Achievements"
+     },
+     "personal_records": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Personal Records"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "applied",
+     "server_updated_at",
+     "xp_from_session",
+     "new_achievements",
+     "personal_records"
+    ],
+    "title": "SessionSyncResult"
+   },
+   "SetIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "position": {
+      "type": "integer",
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Position"
+     },
+     "side": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "left",
+         "right"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Side"
+     },
+     "weight_kg": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 1000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Weight Kg"
+     },
+     "reps": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 1000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reps"
+     },
+     "rpe": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 10.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rpe"
+     },
+     "duration_s": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 86400.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration S"
+     },
+     "distance_m": {
+      "anyOf": [
+       {
+        "type": "number",
+        "maximum": 100000.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance M"
+     },
+     "completed": {
+      "type": "boolean",
+      "title": "Completed",
+      "default": false
+     },
+     "completed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Completed At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "position"
+    ],
+    "title": "SetIO"
+   },
+   "SplitIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "split_type": {
+      "type": "string",
+      "enum": [
+       "ppl",
+       "bro",
+       "upper_lower",
+       "full_body",
+       "custom"
+      ],
+      "title": "Split Type"
+     },
+     "days": {
+      "items": {
+       "$ref": "#/components/schemas/WorkoutDayIO"
+      },
+      "type": "array",
+      "maxItems": 7,
+      "minItems": 1,
+      "title": "Days"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "split_type",
+     "days"
+    ],
+    "title": "SplitIn"
+   },
+   "SplitOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "split_type": {
+      "type": "string",
+      "title": "Split Type"
+     },
+     "is_active": {
+      "type": "boolean",
+      "title": "Is Active"
+     },
+     "days": {
+      "items": {
+       "$ref": "#/components/schemas/WorkoutDayIO"
+      },
+      "type": "array",
+      "title": "Days"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "split_type",
+     "is_active",
+     "days"
+    ],
+    "title": "SplitOut"
+   },
+   "TemplateExerciseIO": {
+    "properties": {
+     "exercise_ref": {
+      "type": "string",
+      "maxLength": 64,
+      "title": "Exercise Ref"
+     },
+     "target_sets": {
+      "type": "integer",
+      "maximum": 12.0,
+      "minimum": 1.0,
+      "title": "Target Sets",
+      "default": 3
+     },
+     "target_reps": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Reps"
+     }
+    },
+    "type": "object",
+    "required": [
+     "exercise_ref"
+    ],
+    "title": "TemplateExerciseIO"
+   },
+   "Totals": {
+    "properties": {
+     "calories": {
+      "type": "number",
+      "title": "Calories",
+      "default": 0
+     },
+     "protein_g": {
+      "type": "number",
+      "title": "Protein G",
+      "default": 0
+     },
+     "carbs_g": {
+      "type": "number",
+      "title": "Carbs G",
+      "default": 0
+     },
+     "fat_g": {
+      "type": "number",
+      "title": "Fat G",
+      "default": 0
+     },
+     "meals_logged": {
+      "type": "integer",
+      "title": "Meals Logged",
+      "default": 0
+     },
+     "entries_with_missing_values": {
+      "type": "integer",
+      "title": "Entries With Missing Values",
+      "default": 0
+     },
+     "includes_estimates": {
+      "type": "boolean",
+      "title": "Includes Estimates",
+      "default": false
+     }
+    },
+    "type": "object",
+    "title": "Totals"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   },
+   "WeightIO": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "weight_kg": {
+      "type": "number",
+      "maximum": 400.0,
+      "minimum": 25.0,
+      "title": "Weight Kg"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "day",
+     "weight_kg"
+    ],
+    "title": "WeightIO"
+   },
+   "WorkoutDayIO": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "muscle_groups": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "maxItems": 15,
+      "title": "Muscle Groups"
+     },
+     "weekdays": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "maxItems": 7,
+      "title": "Weekdays"
+     },
+     "template_exercises": {
+      "items": {
+       "$ref": "#/components/schemas/TemplateExerciseIO"
+      },
+      "type": "array",
+      "maxItems": 20,
+      "title": "Template Exercises"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name"
+    ],
+    "title": "WorkoutDayIO"
+   }
+  }
+ }
+}

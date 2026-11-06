@@ -1,6 +1,0 @@
-env.json
-android/key.properties
-*.jks
-*.keystore
-build/
-.dart_tool/
