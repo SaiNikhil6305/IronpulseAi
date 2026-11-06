@@ -1,4 +1,5 @@
-# Render Blueprint for the IronPulse API (FastAPI). Secrets are marked sync:false — set them in the Render dashboard.
+# Render Blueprint for the IronPulse API (backend/). Secrets are marked sync:false:
+# Render asks for them in the dashboard and they are never stored in Git.
 services:
   - type: web
     name: ironpulse-ai
