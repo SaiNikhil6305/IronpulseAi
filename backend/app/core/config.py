@@ -32,7 +32,9 @@ class Settings(BaseSettings):
     ai_api_key: str = ""
     ai_model: str = ""
     ai_base_url: str = ""  # required for openai_compatible
-    ai_timeout_seconds: float = 30.0
+    ai_timeout_seconds: float = 40.0
+    # Sent to OpenAI-compatible providers; "low" keeps Gemini 3 "thinking" short so replies arrive fast.
+    ai_reasoning_effort: str = "low"
     ai_max_output_tokens: int = 900
     ai_rate_limit_per_minute: int = 6
     ai_daily_message_limit: int = 50

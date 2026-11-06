@@ -130,6 +130,7 @@ def call_provider(settings: Settings, system: str, messages: list[dict]) -> str:
                     settings.ai_base_url.rstrip("/") + "/chat/completions",
                     headers={"authorization": f"Bearer {settings.ai_api_key}", "content-type": "application/json"},
                     json={"model": settings.ai_model, "max_tokens": settings.ai_max_output_tokens,
+                          **({"reasoning_effort": settings.ai_reasoning_effort} if settings.ai_reasoning_effort else {}),
                           "messages": [{"role": "system", "content": system}, *messages]})
                 resp.raise_for_status()
                 text = resp.json()["choices"][0]["message"]["content"] or ""
